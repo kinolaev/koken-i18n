@@ -95,7 +95,12 @@ class KokenI18n extends KokenPlugin {
 
 	function kokenI18nOutput($html)
 	{
-		$cookie = isset($_COOKIE['koken_i18n']) ? $_COOKIE['koken_i18n'] : $this->data->lang_default;
+		if(isset($_COOKIE['koken_i18n'])) {
+			$cookie = $_COOKIE['koken_i18n'];
+		} else {
+			$cookie = $this->data->lang_default;
+			setcookie('koken_i18n', $this->data->lang_default, 0, '/');
+		}
 		Koken::$cache_path = str_replace('/cache.', '/cache.'.$cookie.'.', Koken::$cache_path);
 
 		$html = preg_replace_callback("/<span class=\"k-i18n\">(.*?)<\/span>/s", function($matches) {
