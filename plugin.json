@@ -1,0 +1,109 @@
+{ 
+	"name": "Koken I18n",
+	"version": "0.1",
+	"description": "Koken internationalization plugin",
+	"demo": "http://simplebuero.com",
+	"author": {
+		"name": "Sergej Nikolaev",
+		"link": "mailto:kinolaev@gmail.com"
+	},
+	"data": {
+		"separator": {
+			"label": "Text separator",
+			"info": "You need to separate you text with this symbol. Example: |",
+			"type": "string"
+		},
+		"lang_string": {
+			"label": "Languages",
+			"info": "Two letter language codes separated by selected separator, for example, \"en|ru|de|es\"",
+			"type": "string"
+		},
+		"lang_default": {
+			"label": "Default language",
+			"info": "Two letter default language code. Example: en",
+			"type": "string"
+		},
+		"l_album_pl": {
+			"label": "{{ labels.album.plural }} variable translation",
+			"info": "For example, \"Projects|Проекты|Projekte|Proyectos\"",
+			"type": "string"
+		},
+		"l_album_sg": {
+			"label": "{{ labels.album.singular }} variable translation",
+			"info": "For example, \"Project|Проект|Projekt|Proyecto\"",
+			"type": "string"
+		},
+		"l_archive_pl": {
+			"label": "{{ labels.archive.plural }} variable translation",
+			"type": "string"
+		},
+		"l_archive_sg": {
+			"label": "{{ labels.archive.singular }} variable translation",
+			"type": "string"
+		},
+		"l_category_pl": {
+			"label": "{{ labels.category.plural }} variable translation",
+			"type": "string"
+		},
+		"l_category_sg": {
+			"label": "{{ labels.category.singular }} variable translation",
+			"type": "string"
+		},
+		"l_content_pl": {
+			"label": "{{ labels.content.plural }} variable translation",
+			"type": "string"
+		},
+		"l_content_sg": {
+			"label": "{{ labels.content.singular }} variable translation",
+			"type": "string"
+		},
+		"l_essay_pl": {
+			"label": "{{ labels.essay.plural }} variable translation",
+			"type": "string"
+		},
+		"l_essay_sg": {
+			"label": "{{ labels.essay.singular }} variable translation",
+			"type": "string"
+		},
+		"l_favorite_pl": {
+			"label": "{{ labels.favorite.plural }} variable translation",
+			"type": "string"
+		},
+		"l_favorite_sg": {
+			"label": "{{ labels.favorite.singular }} variable translation",
+			"type": "string"
+		},
+		"l_page_pl": {
+			"label": "{{ labels.page.plural }} variable translation",
+			"type": "string"
+		},
+		"l_page_sg": {
+			"label": "{{ labels.page.singular }} variable translation",
+			"type": "string"
+		},
+		"l_set_pl": {
+			"label": "{{ labels.set.plural }} variable translation",
+			"type": "string"
+		},
+		"l_set_sg": {
+			"label": "{{ labels.set.singular }} variable translation",
+			"type": "string"
+		},
+		"l_tag_pl": {
+			"label": "{{ labels.tag.plural }} variable translation",
+			"type": "string"
+		},
+		"l_tag_sg": {
+			"label": "{{ labels.tag.singular }} variable translation",
+			"type": "string"
+		},
+		"l_timeline_pl": {
+			"label": "{{ labels.timeline.plural }} variable translation",
+			"type": "string"
+		},
+		"l_timeline_sg": {
+			"label": "{{ labels.timeline.singular }} variable translation",
+			"type": "string"
+		}
+	}
+}
