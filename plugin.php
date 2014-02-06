@@ -110,13 +110,23 @@ class KokenI18n extends KokenPlugin {
 	
 			foreach ($lang as $i => $l) {
 				$text[$l] = $text[$i];
-				unset($text[$i]);
 			}
+			$text = empty($text[$cookie]) ? $text[$this->data->lang_default] : $text[$cookie];
 
-			if (empty($text[$cookie]))
-				return $text[$this->data->lang_default];
-			else
-				return $text[$cookie];
+			if (substr($text, -4) == '<br>')
+				$text = substr($text, 0, -4);
+			if (substr($text, -12) == '<p class="">')
+				$text = substr($text, 0, -12);
+			if (substr($text, -4) == '<br>')
+				$text = substr($text, 0, -4);
+			if (substr($text, 0, 4) == '<br>')
+				$text = substr($text, 4);
+			if (substr($text, 0, 4) == '</p>')
+				$text = substr($text, 4);
+			if (substr($text, 0, 4) == '<br>')
+				$text = substr($text, 4);
+			
+			return $text;
 		}, $html);
 
 		return $html;
