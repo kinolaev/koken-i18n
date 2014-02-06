@@ -19,7 +19,7 @@ class KokenI18n extends KokenPlugin {
 		$fields = array('title', 'summary', 'description');
 		foreach ($fields as $field) {
 			if (count(explode($this->data->separator, $data[$field])) === $lang)
-				$data[$field] = '<span class="k-i18n">'.$data[$field].'</span>';
+				$data[$field] = '<koken_i18n>'.$data[$field].'</koken_i18n>';
 		}
 		return $data;
 	}
@@ -30,7 +30,7 @@ class KokenI18n extends KokenPlugin {
 		$fields = array('title', 'caption');
 		foreach ($fields as $field) {
 			if (count(explode($this->data->separator, $data[$field])) === $lang)
-				$data[$field] = '<span class="k-i18n">'.$data[$field].'</span>';
+				$data[$field] = '<koken_i18n>'.$data[$field].'</koken_i18n>';
 		}
 		return $data;
 	}
@@ -41,7 +41,7 @@ class KokenI18n extends KokenPlugin {
 		$fields = array('title', 'excerpt', 'content');
 		foreach ($fields as $field) {
 			if (count(explode($this->data->separator, $data[$field])) === $lang)
-				$data[$field] = '<span class="k-i18n">'.$data[$field].'</span>';
+				$data[$field] = '<koken_i18n>'.$data[$field].'</koken_i18n>';
 		}
 		return $data;
 	}
@@ -70,7 +70,7 @@ class KokenI18n extends KokenPlugin {
 		$vars['labels.timeline.singular'] = explode($this->data->separator, $this->data->l_timeline_sg);
 		foreach ($vars as $key => $value) {
 			if (count($value) === $lang)
-				$template = preg_replace('/\{\{\s*'.$key.'.*\}\}/', '<span class="k-i18n">'.implode($this->data->separator, $value).'</span>', $template);
+				$template = preg_replace('/\{\{\s*'.$key.'.*\}\}/', '<koken_i18n>'.implode($this->data->separator, $value).'</koken_i18n>', $template);
 		}
 		return $template;
 	}
@@ -89,7 +89,7 @@ class KokenI18n extends KokenPlugin {
 		$objects['timeline'] = explode($this->data->separator, $this->data->l_timeline_pl);
 		$titles = $objects[(Koken::$source['type'] === 'categories' ? 'category' : rtrim(Koken::$source['type'], 's'))];
 		if (count($titles) === $lang)
-			$title = '<span class="k-i18n">'.implode($this->data->separator, $titles).'</span>';
+			$title = '<koken_i18n>'.implode($this->data->separator, $titles).'</koken_i18n>';
 		return $title;
 	}
 
@@ -103,7 +103,7 @@ class KokenI18n extends KokenPlugin {
 		}
 		Koken::$cache_path = str_replace('/cache.', '/cache.'.$cookie.'.', Koken::$cache_path);
 
-		$html = preg_replace_callback("/<span class=\"k-i18n\">(.*?)<\/span>/s", function($matches) {
+		$html = preg_replace_callback("/<koken_i18n>(.*?)<\/koken_i18n>/s", function($matches) {
 			$lang = explode($this->data->separator, $this->data->lang_string);
 			$text = explode($this->data->separator, $matches[1]);
 			$cookie = isset($_COOKIE['koken_i18n']) ? $_COOKIE['koken_i18n'] : $this->data->lang_default;
