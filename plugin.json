@@ -1,8 +1,8 @@
-{ 
+{
 	"name": "Koken I18n",
-	"version": "0.1",
+	"version": "0.2",
 	"description": "Koken internationalization plugin",
-	"demo": "http://simplebuero.com",
+	"demo": "http://zaytsev.photo",
 	"author": {
 		"name": "Sergej Nikolaev",
 		"link": "mailto:kinolaev@gmail.com"
@@ -11,99 +11,139 @@
 		"separator": {
 			"label": "Text separator",
 			"info": "You need to separate you text with this symbol. Example: |",
-			"type": "string"
+			"type": "string",
+			"value": "|"
 		},
 		"lang_string": {
 			"label": "Languages",
 			"info": "Two letter language codes separated by selected separator, for example, \"en|ru|de|es\"",
-			"type": "string"
+			"type": "string",
+			"value": "en|ru"
 		},
 		"lang_default": {
 			"label": "Default language",
 			"info": "Two letter default language code. Example: en",
-			"type": "string"
+			"type": "string",
+			"value": "ru"
 		},
-		"l_album_pl": {
+		"default_switcher": {
+			"label": "Show standard language switcher",
+			"info": "Check to show standard switcher",
+			"type": "boolean",
+			"value": true
+		},
+		"default_switcher_style": {
+			"label": "Add standard language switcher style",
+			"info": "Show language switcher in top right corner",
+			"type": "boolean",
+			"value": true
+		},
+		"labels_album_plural": {
 			"label": "{{ labels.album.plural }} variable translation",
 			"info": "For example, \"Projects|Проекты|Projekte|Proyectos\"",
-			"type": "string"
+			"type": "string",
+			"value": "Albums|Альбомы"
 		},
-		"l_album_sg": {
+		"labels_album_singular": {
 			"label": "{{ labels.album.singular }} variable translation",
 			"info": "For example, \"Project|Проект|Projekt|Proyecto\"",
-			"type": "string"
+			"type": "string",
+			"value": "Album|Альбом"
 		},
-		"l_archive_pl": {
+		"labels_archive_plural": {
 			"label": "{{ labels.archive.plural }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Archives|Архивы"
 		},
-		"l_archive_sg": {
+		"labels_archive_singular": {
 			"label": "{{ labels.archive.singular }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Archive|Архив"
 		},
-		"l_category_pl": {
+		"labels_category_plural": {
 			"label": "{{ labels.category.plural }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Сategories|Рубрики"
 		},
-		"l_category_sg": {
+		"labels_category_singular": {
 			"label": "{{ labels.category.singular }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Category|Рубрика"
 		},
-		"l_content_pl": {
+		"labels_content_plural": {
 			"label": "{{ labels.content.plural }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Content|Вещи"
 		},
-		"l_content_sg": {
+		"labels_content_singular": {
 			"label": "{{ labels.content.singular }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Content|Вещь"
 		},
-		"l_essay_pl": {
+		"labels_essay_plural": {
 			"label": "{{ labels.essay.plural }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Essays|Эссе"
 		},
-		"l_essay_sg": {
+		"labels_essay_singular": {
 			"label": "{{ labels.essay.singular }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Essay|Эссе"
 		},
-		"l_favorite_pl": {
+		"labels_favorite_plural": {
 			"label": "{{ labels.favorite.plural }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Favorites|Избранные"
 		},
-		"l_favorite_sg": {
+		"labels_favorite_singular": {
 			"label": "{{ labels.favorite.singular }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Favorite|Избранное"
 		},
-		"l_page_pl": {
+		"labels_page_plural": {
 			"label": "{{ labels.page.plural }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Pages|Страницы"
 		},
-		"l_page_sg": {
+		"labels_page_singular": {
 			"label": "{{ labels.page.singular }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Page|Страница"
 		},
-		"l_set_pl": {
+		"labels_set_plural": {
 			"label": "{{ labels.set.plural }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Sets|Сеты"
 		},
-		"l_set_sg": {
+		"labels_set_singular": {
 			"label": "{{ labels.set.singular }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Set|Сет"
 		},
-		"l_tag_pl": {
+		"labels_tag_plural": {
 			"label": "{{ labels.tag.plural }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Tags|Метки"
 		},
-		"l_tag_sg": {
+		"labels_tag_singular": {
 			"label": "{{ labels.tag.singular }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Tag|Метка"
 		},
-		"l_timeline_pl": {
+		"labels_timeline_plural": {
 			"label": "{{ labels.timeline.plural }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Timeline|Таймлайн"
 		},
-		"l_timeline_sg": {
+		"labels_timeline_singular": {
 			"label": "{{ labels.timeline.singular }} variable translation",
-			"type": "string"
+			"type": "string",
+			"value": "Timeline|Таймлайн"
+		},
+		"labels_home": {
+			"label": "{{ labels.home }} variable translation",
+			"type": "string",
+			"value": "Home|Главная"
 		}
 	}
 }
