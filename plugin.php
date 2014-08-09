@@ -8,127 +8,158 @@ class KokenI18n extends KokenPlugin {
 		$this->register_filter('api.album', 'kokenI18nAlbum');
 		$this->register_filter('api.content', 'kokenI18nContent');
 		$this->register_filter('api.text', 'kokenI18nText');
-		$this->register_filter('site.template', 'kokenI18nTemplate');
-		$this->register_filter('site.title', 'kokenI18nTitle');
+		$this->register_filter('api.truncate', 'kokenI18nTruncate');
+		$this->register_filter('site.template', 'kokenI18nLabels');
 		$this->register_filter('site.output', 'kokenI18nOutput');
+		$this->register_hook('before_closing_body', 'kokenI18nSwitcher');
+		$this->register_hook('before_closing_head', 'kokenI18nSwitcherStyle');
+	}
+
+	private function kokenI18nWrapper($fields, $data)
+	{
+		$lang_count = count(explode($this->data->separator, $this->data->lang_string));
+		foreach ($fields as $field) {
+			if (count(explode($this->data->separator, $data[$field])) === $lang_count)
+				if (!preg_match('/^\[\[.*?\]\]$/s', $data[$field]))
+					$data[$field] = '[['.$data[$field].']]';
+		}
+		return $data;
+	}
+
+	private function kokenI18nCookie($setcookie = false)
+	{
+		$cookie = isset($_COOKIE['koken_i18n']) ? $_COOKIE['koken_i18n'] : $this->data->lang_default;
+
+		if($setcookie)
+			setcookie('koken_i18n', $cookie, 0, '/');
+
+		return $cookie;
+	}
+
+	private function kokenI18nCallback($matches)
+	{
+		$lang = explode($this->data->separator, $this->data->lang_string);
+		$text = explode($this->data->separator, $matches[1]);
+		
+		if (count($lang) === count($text)) {
+			$text = array_combine($lang, $text);
+			$cookie = $this->kokenI18nCookie();
+
+			$text = empty($text[$cookie]) ? $text[$this->data->lang_default] : $text[$cookie];
+
+			$text = preg_replace('/^\s*(<\/.+?>\s*|<br.*?>\s*)*|(\s*<[^\/]+?>)*\s*$/', '', $text);
+
+			return $text;
+		}
+
+		return $matches[0];
+	}
+
+	private function kokenI18nExpand($html)
+	{
+		return preg_replace_callback('/\[\[((?:.(?!\[\[))+?)\]\]/s', array($this, 'kokenI18nCallback'), $html);
 	}
 
 	function kokenI18nAlbum($data)
 	{
-		$lang = count(explode($this->data->separator, $this->data->lang_string));
-		$fields = array('title', 'summary', 'description');
-		foreach ($fields as $field) {
-			if (count(explode($this->data->separator, $data[$field])) === $lang)
-				$data[$field] = '<koken_i18n>'.$data[$field].'</koken_i18n>';
-		}
-		return $data;
+		return $this->kokenI18nWrapper(array('title', 'summary', 'description'), $data);
 	}
 
 	function kokenI18nContent($data)
 	{
-		$lang = count(explode($this->data->separator, $this->data->lang_string));
-		$fields = array('title', 'caption');
-		foreach ($fields as $field) {
-			if (count(explode($this->data->separator, $data[$field])) === $lang)
-				$data[$field] = '<koken_i18n>'.$data[$field].'</koken_i18n>';
-		}
-		return $data;
+		return $this->kokenI18nWrapper(array('title', 'caption'), $data);
 	}
 
 	function kokenI18nText($data)
 	{
-		$lang = count(explode($this->data->separator, $this->data->lang_string));
-		$fields = array('title', 'excerpt', 'content');
-		foreach ($fields as $field) {
-			if (count(explode($this->data->separator, $data[$field])) === $lang)
-				$data[$field] = '<koken_i18n>'.$data[$field].'</koken_i18n>';
-		}
-		return $data;
+		return $this->kokenI18nWrapper(array('title', 'excerpt', 'content'), $data);
 	}
 
-	function kokenI18nTemplate($template) {
-		$lang = count(explode($this->data->separator, $this->data->lang_string));
-		$vars['labels.album.plural'] = explode($this->data->separator, $this->data->l_album_pl);
-		$vars['labels.album.singular'] = explode($this->data->separator, $this->data->l_album_sg);
-		$vars['labels.archive.plural'] = explode($this->data->separator, $this->data->l_archive_pl);
-		$vars['labels.archive.singular'] = explode($this->data->separator, $this->data->l_archive_sg);
-		$vars['labels.category.plural'] = explode($this->data->separator, $this->data->l_category_pl);
-		$vars['labels.category.singular'] = explode($this->data->separator, $this->data->l_category_sg);
-		$vars['labels.content.plural'] = explode($this->data->separator, $this->data->l_content_pl);
-		$vars['labels.content.singular'] = explode($this->data->separator, $this->data->l_content_sg);
-		$vars['labels.essay.plural'] = explode($this->data->separator, $this->data->l_essay_pl);
-		$vars['labels.essay.singular'] = explode($this->data->separator, $this->data->l_essay_sg);
-		$vars['labels.favorite.plural'] = explode($this->data->separator, $this->data->l_favorite_pl);
-		$vars['labels.favorite.singular'] = explode($this->data->separator, $this->data->l_favorite_sg);
-		$vars['labels.page.plural'] = explode($this->data->separator, $this->data->l_page_pl);
-		$vars['labels.page.singular'] = explode($this->data->separator, $this->data->l_page_sg);
-		$vars['labels.set.plural'] = explode($this->data->separator, $this->data->l_set_pl);
-		$vars['labels.set.singular'] = explode($this->data->separator, $this->data->l_set_sg);
-		$vars['labels.tag.plural'] = explode($this->data->separator, $this->data->l_tag_pl);
-		$vars['labels.tag.singular'] = explode($this->data->separator, $this->data->l_tag_sg);
-		$vars['labels.timeline.plural'] = explode($this->data->separator, $this->data->l_timeline_pl);
-		$vars['labels.timeline.singular'] = explode($this->data->separator, $this->data->l_timeline_sg);
-		foreach ($vars as $key => $value) {
-			if (count($value) === $lang)
-				$template = preg_replace('/\{\{\s*'.$key.'.*\}\}/', '<koken_i18n>'.implode($this->data->separator, $value).'</koken_i18n>', $template);
+	function kokenI18nLabels($tmpl)
+	{
+		$nums = array('singular', 'plural');
+		foreach (Koken::$site['url_data'] as $key => $value) {
+			if (is_array($value)) {
+
+				foreach ($nums as $num)
+					if (isset($this->data->{'labels_'.$key.'_'.$num}))
+						Koken::$site['url_data'][$key][$num] = '[['.$this->data->{'labels_'.$key.'_'.$num}.']]';
+
+			} else if (is_string($value)) {
+
+				if (isset($this->data->{'labels_'.$key}))
+					Koken::$site['url_data'][$key] = '[['.$this->data->{'labels_'.$key}.']]';
+
+			}
 		}
-		return $template;
+		return $tmpl;
 	}
 
-	function kokenI18nTitle($title) {
-		$lang = count(explode($this->data->separator, $this->data->lang_string));
-		$objects['album'] = explode($this->data->separator, $this->data->l_album_pl);
-		$objects['archive'] = explode($this->data->separator, $this->data->l_archive_pl);
-		$objects['category'] = explode($this->data->separator, $this->data->l_category_pl);
-		$objects['content'] = explode($this->data->separator, $this->data->l_content_pl);
-		$objects['essay'] = explode($this->data->separator, $this->data->l_essay_pl);
-		$objects['favorite'] = explode($this->data->separator, $this->data->l_favorite_pl);
-		$objects['page'] = explode($this->data->separator, $this->data->l_page_pl);
-		$objects['set'] = explode($this->data->separator, $this->data->l_set_pl);
-		$objects['tag'] = explode($this->data->separator, $this->data->l_tag_pl);
-		$objects['timeline'] = explode($this->data->separator, $this->data->l_timeline_pl);
-		$titles = $objects[(Koken::$source['type'] === 'categories' ? 'category' : rtrim(Koken::$source['type'], 's'))];
-		if (count($titles) === $lang)
-			$title = '<koken_i18n>'.implode($this->data->separator, $titles).'</koken_i18n>';
-		return $title;
+	function kokenI18nTruncate($str) {
+		return $this->kokenI18nExpand($str);
 	}
 
 	function kokenI18nOutput($html)
 	{
-		if(isset($_COOKIE['koken_i18n'])) {
-			$cookie = $_COOKIE['koken_i18n'];
-		} else {
-			$cookie = $this->data->lang_default;
-			setcookie('koken_i18n', $this->data->lang_default, 0, '/');
-		}
-		Koken::$cache_path = str_replace('/cache.', '/cache.'.$cookie.'.', Koken::$cache_path);
+		if ($_SERVER['SCRIPT_NAME'] !== "/preview.php")
+			Koken::$cache_path = str_replace('/cache.', '/cache.'.$this->kokenI18nCookie(true).'.', Koken::$cache_path);
 
-		$html = preg_replace_callback("/<koken_i18n>(.*?)<\/koken_i18n>/s", function($matches) {
+		return $this->kokenI18nExpand($html);
+	}
+
+	function kokenI18nSwitcher()
+	{
+		if($this->data->default_switcher) {
 			$lang = explode($this->data->separator, $this->data->lang_string);
-			$text = explode($this->data->separator, $matches[1]);
-			$cookie = isset($_COOKIE['koken_i18n']) ? $_COOKIE['koken_i18n'] : $this->data->lang_default;
-	
-			foreach ($lang as $i => $l) {
-				$text[$l] = $text[$i];
+			$li = '';
+			foreach($lang as $l) {
+				$li .= '<li><a href="#" data-lang="'.$l.'">'.$l.'</a></li>';
 			}
-			$text = empty($text[$cookie]) ? $text[$this->data->lang_default] : $text[$cookie];
+			echo <<<OUT
+<ul id="lang-switcher">{$li}</ul>
+<script>
+$('#lang-switcher a[data-lang="'+$.cookie('koken_i18n')+'"]').parent().addClass('current');
+$('#lang-switcher a').on('click', function(){
+	if($.cookie('koken_i18n') != $(this).data('lang')) {
+		$.cookie('koken_i18n', $(this).data('lang'), { path: '/' });
+		location.reload(true);
+	}
+	return false;
+});
+</script>
+OUT;
+		}
+	}
 
-			if (substr($text, -4) == '<br>')
-				$text = substr($text, 0, -4);
-			if (substr($text, -12) == '<p class="">')
-				$text = substr($text, 0, -12);
-			if (substr($text, -4) == '<br>')
-				$text = substr($text, 0, -4);
-			if (substr($text, 0, 4) == '<br>')
-				$text = substr($text, 4);
-			if (substr($text, 0, 4) == '</p>')
-				$text = substr($text, 4);
-			if (substr($text, 0, 4) == '<br>')
-				$text = substr($text, 4);
-			
-			return $text;
-		}, $html);
-
-		return $html;
+	function kokenI18nSwitcherStyle()
+	{
+		if($this->data->default_switcher_style) {
+			echo <<<OUT
+<style>
+#lang-switcher {
+	position:fixed;
+	top:4px;
+	right:4px;
+	z-index:9999;
+}
+#lang-switcher li {
+	display:inline-block;
+	margin:4px 0;
+	border-right:1px solid;
+}
+#lang-switcher li:last-child {
+	border-right:none;
+}
+#lang-switcher li.current {
+	font-weight:bold;
+}
+#lang-switcher li a {
+	display:block;
+	padding:0 4px;
+	outline-style:none;
+}
+</style>
+OUT;
+		}
 	}
 }
