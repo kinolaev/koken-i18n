@@ -1,6 +1,6 @@
 {
 	"name": "Koken I18n",
-	"version": "0.2",
+	"version": "0.3",
 	"description": "Koken internationalization plugin",
 	"demo": "http://zaytsev.photo",
 	"author": {
@@ -73,7 +73,7 @@
 		"labels_content_plural": {
 			"label": "{{ labels.content.plural }} variable translation",
 			"type": "string",
-			"value": "Content|Вещи"
+			"value": "Contents|Вещи"
 		},
 		"labels_content_singular": {
 			"label": "{{ labels.content.singular }} variable translation",
